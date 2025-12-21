@@ -8,12 +8,12 @@ configureOpenAPI(app)
 
 // 定义路由数组
 const routes = [
-    demo,
+    { path: "/testDemo", router: demo },
 ]
 
 // 注册所有路由
-routes.forEach((route) => {
-    app.route('/', route)
+routes.forEach(({ path, router }) => {
+    app.route(path, router)
 })
 
 export default app 

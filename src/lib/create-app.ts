@@ -10,11 +10,11 @@ export default function createApp() {
     const app = createRouter()
     // notFound & onError
     app.notFound((c) => {
-        return c.json({ message: 'Not Found' }, 404)
+        return c.json({ message: 'Not Found', code: 404 }, 404)
     })
     app.onError((err, c) => {
         console.error('Unhandled Error:', err)
-        return c.json({ message: 'Internal Server Error' }, 500)
+        return c.json({ message: 'Internal Server Error', code: 500 }, 500)
     })
     return app
 }
