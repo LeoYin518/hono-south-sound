@@ -8,6 +8,7 @@ expand(config())
 const EnvSchema = z.object({
     NODE_ENV: z.string().default('development'),
     PORT: z.coerce.number().default(3000),
+    DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 });
 
 // 根据 EnvSchema 里面的属性接口自动生成一个 TS 类型

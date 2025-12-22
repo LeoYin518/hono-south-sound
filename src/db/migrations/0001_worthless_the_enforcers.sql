@@ -1,0 +1,1 @@
+ALTER TABLE `demo` MODIFY COLUMN `createTime` timestamp DEFAULT (now());
