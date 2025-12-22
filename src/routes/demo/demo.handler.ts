@@ -1,7 +1,9 @@
-import type { RouteHandler } from "@hono/zod-openapi";
 import type { ListRoute } from "./demo.routes.js";
 import * as HttpStatusCodes from "@/lib/http-status-codes.js";
-export const list: RouteHandler<ListRoute> = (c) => {
+import type { AppRouteHandler } from "@/lib/types.js";
+
+export const list: AppRouteHandler<ListRoute> = (c) => {
+    c.var.logger.error("Handling /demo request");
     return c.json({
         code: HttpStatusCodes.OK,
         message: "操作成功",
