@@ -1,6 +1,6 @@
 CREATE TABLE `test` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`title` text NOT NULL,
-	`gender` integer DEFAULT 0 NOT NULL,
+	`gender` integer DEFAULT true NOT NULL,
 	`created_at` integer NOT NULL
 );
