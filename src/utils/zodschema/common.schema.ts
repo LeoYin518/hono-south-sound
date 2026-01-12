@@ -16,3 +16,15 @@ export const ResponseWithData = (data: any) => {
         data,
     })
 }
+
+export const FormDataSchema = {
+    body: {
+        content: {
+            'multipart/form-data': {
+                schema: z.object({
+                    file: z.any().openapi({ type: 'string', format: 'binary' }),
+                }),
+            },
+        },
+    },
+}

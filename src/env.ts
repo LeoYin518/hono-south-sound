@@ -9,6 +9,11 @@ const EnvSchema = z.object({
     NODE_ENV: z.string().default('development'),
     PORT: z.coerce.number().default(3000),
     DB_FILE_URL: z.string().default('./src/db/dev.db'),
+    // OSS
+    OSS_ACCESS_KEY_ID: z.string(),
+    OSS_ACCESS_KEY_SECRET: z.string(),
+    OSS_BUCKET: z.string(),
+    OSS_REGION: z.string(),
 });
 
 // 根据 EnvSchema 里面的属性接口自动生成一个 TS 类型
