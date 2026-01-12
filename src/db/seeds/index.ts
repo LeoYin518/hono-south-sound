@@ -1,13 +1,20 @@
 import { drizzle } from "drizzle-orm/better-sqlite3";
-import { reset, seed } from "drizzle-seed";
-import { test } from "../schema.js";
 import env from "@/env.js";
-
+import { reset, seed } from "drizzle-seed";
+import * as schema from "../schema.js";
 
 async function main() {
     const db = drizzle(env.DB_FILE_URL); // 例如 "./src/db/sqlite.db"
-    await reset(db, { test });
-    await seed(db, { test }, { count: 50 });
+    await reset(db, schema);
+    await seed(db, schema).refine((f) => ({
+        user: {
+            count: 1,
+            with: {
+                blog: 5,
+                course: 5,
+            }
+        }
+    }));
     console.log("✅ 种子执行成功");
 }
 
