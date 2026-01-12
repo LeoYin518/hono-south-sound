@@ -2,7 +2,7 @@ import db from "@/db/index.js";
 import type { AddHandlerRoute, DeleteHandlerRoute, DetailRoute, ListRoute, UpdateHandlerRoute } from "./category.routes.js";
 import type { AppRouteHandler } from "@/lib/types.js";
 import { category, course, user } from "@/db/schema.js";
-import { eq, desc, and, ne } from "drizzle-orm";
+import { eq, desc, and, ne, sql } from "drizzle-orm";
 import { R } from "@/utils/response.js";
 
 export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
@@ -45,6 +45,7 @@ export const updateHandler: AppRouteHandler<UpdateHandlerRoute> = async (c) => {
             title,
             description,
             remark,
+            updatedAt: sql`(current_timestamp)`,
         }).where(eq(category.id, +id))
     } else {
         return R.err(c, "类别名称已存在")
