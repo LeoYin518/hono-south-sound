@@ -57,7 +57,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         return R.err(c, "类别不存在")
     }
 
-    const exists = await db.select().from(course).where(and(eq(course.title, title), ne(course.status, 2)))
+    const exists = await db.select().from(course).where(and(eq(course.title, title)))
     if (exists.length !== 0) {
         return R.err(c, "课程已存在")
     }
@@ -156,7 +156,6 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
     })
         .from(course)
         .leftJoin(user, eq(course.userId, user.id))
-        .where(ne(course.status, 2))
         .orderBy(desc(course.id))
 
     const data = courses.map(item => ({
@@ -190,24 +189,27 @@ export const detail: AppRouteHandler<DetailRoute> = async (c) => {
             nickname: user.nickname,
             avatar: user.avatar,
         },
-    })
-        .from(course)
+        chapters: {
+            id: chapter.id,
+            title: chapter.title,
+            courseId: chapter.courseId,
+            chapterNumber: chapter.chapterNumber,
+            status: chapter.status,
+            createdAt: chapter.createdAt,
+            updatedAt: chapter.updatedAt,
+        },
+    }).from(course)
         .leftJoin(user, eq(course.userId, user.id))
-        .where(and(eq(course.id, +id), ne(course.status, 2)))
+        .leftJoin(chapter, eq(course.id, chapter.courseId))
+        .where(and(eq(course.id, +id)))
 
     if (rows.length === 0) {
         return R.err(c, "课程不存在")
     }
 
-    const chapters = await db.select()
-        .from(chapter)
-        .where(and(eq(chapter.courseId, +id), ne(chapter.status, 2)))
-        .orderBy(asc(chapter.chapterNumber))
-
     const detail = {
         ...rows[0],
         price: rows[0].price / 100,
-        chapter: chapters,
     }
 
     return R.ok(c, detail)
