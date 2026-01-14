@@ -15,7 +15,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         title,
         description,
         remark,
-        userId: 1,
+        userId: c.get("auth")?.userId,
     })
     return R.ok(c, result)
 }

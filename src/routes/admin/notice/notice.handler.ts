@@ -15,7 +15,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         status: 0,
         sort: sort ?? 0,
         remark,
-        userId: 1,
+        userId: c.get("auth")?.userId,
     })
 
     return R.ok(c, result)
@@ -28,7 +28,7 @@ export const deleteHandler: AppRouteHandler<DeleteHandlerRoute> = async (c) => {
         return R.err(c, "记录不存在")
     }
 
-    await db.update(notice).set({ status: 2 }).where(eq(notice.id, +id))
+    await db.update(notice).set({ status: 2, updatedAt: sql`(current_timestamp)` }).where(eq(notice.id, +id))
     return R.ok(c)
 }
 

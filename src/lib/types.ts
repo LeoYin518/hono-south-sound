@@ -5,6 +5,12 @@ import type { Logger } from 'pino'
 export type AppType = {
   Variables: {
     logger: Logger
+    // 认证信息
+    auth?: {
+      userId: number
+      aud: string
+      role?: unknown
+    }
   }
 }
 

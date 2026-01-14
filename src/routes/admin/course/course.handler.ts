@@ -71,7 +71,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         type: type ?? 0,
         price: parsedPrice.cents ?? 0,
         sort: sort ?? 0,
-        userId: 1,
+        userId: c.get("auth")?.userId,
     })
 
     return R.ok(c, result)
