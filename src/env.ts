@@ -17,8 +17,8 @@ const EnvSchema = z.object({
     // JWT
     JWT_ADMIN_SECRET: z.string(),
     JWT_ADMIN_EXPIRES_IN_SECONDS: z.coerce.number().int().min(60).default(60 * 60 * 24),
-    JWT_CLIENT_SECRET: z.string().optional(),
-    JWT_CLIENT_EXPIRES_IN_SECONDS: z.coerce.number().int().min(60).optional(),
+    JWT_CLIENT_SECRET: z.string(),
+    JWT_CLIENT_EXPIRES_IN_SECONDS: z.coerce.number().int().min(60).default(60 * 60 * 24),
 });
 
 // 根据 EnvSchema 里面的属性接口自动生成一个 TS 类型
@@ -26,12 +26,7 @@ export type Env = z.infer<typeof EnvSchema>;
 
 let env: Env;
 try {
-    const parsed = EnvSchema.parse(process.env);
-    env = {
-        ...parsed,
-        JWT_CLIENT_SECRET: parsed.JWT_CLIENT_SECRET ?? parsed.JWT_ADMIN_SECRET,
-        JWT_CLIENT_EXPIRES_IN_SECONDS: parsed.JWT_CLIENT_EXPIRES_IN_SECONDS ?? parsed.JWT_ADMIN_EXPIRES_IN_SECONDS,
-    };
+    env = EnvSchema.parse(process.env);
 } catch (e) {
     const error = e as z.ZodError;
     console.error('❌ Invalid environment variables:');

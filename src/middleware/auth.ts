@@ -76,7 +76,8 @@ export const requireAdminAuth = (): MiddlewareHandler => {
 export const requireClientAuth = (): MiddlewareHandler => {
     return requireJwtAuth({
         aud: 'client',
-        secret: env.JWT_CLIENT_SECRET!,
+        secret: env.JWT_CLIENT_SECRET,
+        skipPathPrefix: '/client/auth/',
     })
 }
 
