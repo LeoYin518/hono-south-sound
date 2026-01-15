@@ -22,12 +22,13 @@ type JwtAudience = 'admin' | 'client'
 const requireJwtAuth = (options: {
     aud: JwtAudience
     secret: string
-    skipPathPrefix?: string
+    skipPathPrefixes?: string[]
 }): MiddlewareHandler => {
     return async (c, next) => {
-        if (options.skipPathPrefix) {
+        const skipPrefixes = options.skipPathPrefixes ?? []
+        if (skipPrefixes.length > 0) {
             const path = c.req.path
-            if (path.startsWith(options.skipPathPrefix)) {
+            if (skipPrefixes.some(p => path.startsWith(p))) {
                 return next()
             }
         }
@@ -61,7 +62,7 @@ export const requireAdminAuth = (): MiddlewareHandler => {
     return requireJwtAuth({
         aud: 'admin',
         secret: env.JWT_ADMIN_SECRET,
-        skipPathPrefix: '/admin/auth/',
+        skipPathPrefixes: ['/admin/auth/'],
     })
 }
 
@@ -77,7 +78,7 @@ export const requireClientAuth = (): MiddlewareHandler => {
     return requireJwtAuth({
         aud: 'client',
         secret: env.JWT_CLIENT_SECRET,
-        skipPathPrefix: '/client/auth/',
+        skipPathPrefixes: ['/client/auth/', '/client/category/list'],
     })
 }
 
