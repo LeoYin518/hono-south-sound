@@ -6,7 +6,7 @@ import { and, desc, eq, ne, sql } from "drizzle-orm";
 import { R } from "@/utils/response.js";
 
 export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
-    const { chapterNumber, title, content, courseId, video, sort } = await c.req.json()
+    const { chapterNumber, title, content, courseId, video, sort, status } = await c.req.json()
 
     const courseExists = await db.select().from(course).where(and(eq(course.id, +courseId)))
     if (courseExists.length === 0) {
@@ -20,7 +20,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         courseId: +courseId,
         video,
         sort: sort ?? 0,
-        status: 0,
+        status: status ?? 0
     })
 
     return R.ok(c, result)

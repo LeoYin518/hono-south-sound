@@ -1,16 +1,11 @@
 import jsonContent from "@/lib/json-content.js";
 import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "@/lib/http-status-codes.js";
-import { ParamSchemaId, ResponseCommon, ResponseWithData } from "@/utils/zodschema/common.schema.js"
+import { ParamSchemaId, QuerySchemaPageSize, ResponseCommon, ResponseWithData } from "@/utils/zodschema/common.schema.js"
 import { NoticeCreateDTO, NoticeUpdateDTO } from "./dto/create.dto.js";
 import { NoticeDetailSelectSchema, NoticeListItemSelectSchema } from "./vo/response.vo.js";
 
 const tags = ["管理员-通知接口"];
-
-const QuerySchemaPageSize = z.object({
-    page: z.string().optional().openapi({ param: { name: "page", in: "query" } }),
-    size: z.string().optional().openapi({ param: { name: "size", in: "query" } }),
-})
 
 export const addHandler = createRoute({
     path: "/add",

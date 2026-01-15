@@ -6,6 +6,7 @@ export const ChapterCreateDTO = z.object({
     content: z.string().optional(),
     courseId: z.number(),
     video: z.url().optional(),
+    status: z.number().int().min(0).max(2).optional(),
     sort: z.number().int().min(0).optional(),
 })
 

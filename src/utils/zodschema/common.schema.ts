@@ -28,3 +28,8 @@ export const FormDataSchema = {
         },
     },
 }
+
+export const QuerySchemaPageSize = z.object({
+    page: z.string().optional().openapi({ param: { name: "page", in: "query" } }),
+    size: z.string().optional().openapi({ param: { name: "size", in: "query" } }),
+})

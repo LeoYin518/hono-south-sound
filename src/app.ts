@@ -8,6 +8,8 @@ import chapter from '@/routes/admin/chapter/chapter.index.js'
 import notice from '@/routes/admin/notice/notice.index.js'
 import clientAuth from '@/routes/client/auth/auth.index.js'
 import clientCategory from '@/routes/client/category/category.index.js'
+import clientCourse from '@/routes/client/course/course.index.js'
+import clientChapter from '@/routes/client/chapter/chapter.index.js'
 import alioss from '@/routes/oss/alioss.index.js'
 
 const app = createApp()
@@ -27,6 +29,8 @@ const routes = [
     { path: "/admin/notice", router: notice },
     { path: "/client/auth", router: clientAuth },
     { path: "/client/category", router: clientCategory },
+    { path: "/client/course", router: clientCourse },
+    { path: "/client/chapter", router: clientChapter },
     { path: "/oss", router: alioss },
 ]
 

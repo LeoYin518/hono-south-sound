@@ -2,7 +2,7 @@ import db from "@/db/index.js";
 import type { AddHandlerRoute, DeleteHandlerRoute, DetailRoute, ListRoute, UpdateHandlerRoute } from "./course.routes.js";
 import type { AppRouteHandler } from "@/lib/types.js";
 import { category, chapter, course, user } from "@/db/schema.js";
-import { and, asc, desc, eq, ne, sql } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 import { R } from "@/utils/response.js";
 
 const parsePriceToCents = (input: unknown) => {
@@ -45,7 +45,7 @@ const parsePriceToCents = (input: unknown) => {
 }
 
 export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
-    const { title, cover, categoryId, tags, description, type, price, sort } = await c.req.json()
+    const { title, cover, categoryId, tags, description, type, price, status, sort } = await c.req.json()
 
     const parsedPrice = parsePriceToCents(price)
     if (!parsedPrice.ok) {
@@ -70,6 +70,7 @@ export const addHandler: AppRouteHandler<AddHandlerRoute> = async (c) => {
         description,
         type: type ?? 0,
         price: parsedPrice.cents ?? 0,
+        status: status ?? 0,
         sort: sort ?? 0,
         userId: c.get("auth")?.userId,
     })

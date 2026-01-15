@@ -78,7 +78,12 @@ export const requireClientAuth = (): MiddlewareHandler => {
     return requireJwtAuth({
         aud: 'client',
         secret: env.JWT_CLIENT_SECRET,
-        skipPathPrefixes: ['/client/auth/', '/client/category/list'],
+        skipPathPrefixes: [
+            '/client/auth/',
+            '/client/category/list',
+            '/client/course/',
+            '/client/chapter/list',
+        ],
     })
 }
 

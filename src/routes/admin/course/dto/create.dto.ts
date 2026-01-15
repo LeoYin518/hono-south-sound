@@ -8,6 +8,7 @@ export const CourseCreateDTO = z.object({
     description: z.string().min(1).optional(),
     type: z.number().int().min(0).max(1).optional(),
     price: z.number().min(0).optional(),
+    status: z.number().int().min(0).max(2).optional().default(0),
     sort: z.number().int().min(0).optional(),
 })
 
